@@ -65,9 +65,9 @@ export class SpeciesidentificationPage implements ComponentInterface {
     console.log("ctors");
 
     //mock
-    fetch('./data/index.json')
+    fetch("./data/index.json")
       .then((response: Response) => response.json())
-      .then(responseJSON => {
+      .then((responseJSON) => {
         console.log(responseJSON);
         DataService.setSpeciesGroup(responseJSON[0]);
       });
@@ -260,6 +260,11 @@ export class SpeciesidentificationPage implements ComponentInterface {
     this.view = view;
   }
 
+  startFrom(historyItem) {
+    DataService.resetToQuestionFromHistory(historyItem);
+    this.view = "question";
+  }
+
   openVideo(videoUrl: string) {
     console.log("show vid: " + videoUrl);
     /* TODO
@@ -274,6 +279,21 @@ export class SpeciesidentificationPage implements ComponentInterface {
         popover.present();
       });
     }*/
+  }
+
+  selectCustomQuestion(question) {
+    DataService.selectCustomQuestion(question);
+    this.view = "question";
+  }
+
+  selectCustomQuestionCategory(category) {
+    if (this.fixedCategory === category.text) {
+      // deselect
+      DataService.fixCustomCategory(undefined);
+    } else {
+      DataService.fixCustomCategory(category);
+      this.view = "question";
+    }
   }
 
   selectOption(answer: any) {
@@ -757,7 +777,63 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   ngshow: this.view === "history",
                 }}
               >
-                History TODO
+                <ion-item-divider class="idl-answer-heading idl-top">
+                  Fragen Historie
+                </ion-item-divider>
+                <ion-item
+                  class={{
+                    "idl-item-info": true,
+                    nghide: this.history?.length !== 0,
+                    ngshow: this.history?.length === 0,
+                  }}
+                >
+                  Es wurden noch keine Fragen beantwortet!
+                </ion-item>
+
+                {this.history?.map((historyItem) => (
+                  <ion-card class="idl-history" ion-item>
+                    <ion-item>
+                      <h2>
+                        {historyItem.index}.{historyItem.question.questionShort}
+                      </h2>
+                    </ion-item>
+                    <ion-item text-wrap>
+                      <h1>
+                        <b>Frage:</b> {historyItem.question.question}
+                      </h1>
+                      <h1
+                        class={{
+                          nghide: historyItem.skipped,
+                          ngshow: !historyItem.skipped,
+                        }}
+                      >
+                        <b>Antwort:</b> {historyItem.answer.text}
+                        {historyItem.answer.unit}
+                      </h1>
+                      <h1
+                        class={{
+                          nghide: !historyItem.skipped,
+                          ngshow: historyItem.skipped,
+                        }}
+                      >
+                        <b>Antwort:</b> übersprungen
+                      </h1>
+                    </ion-item>
+                    <button
+                      ion-item
+                      icon-left
+                      //TODO clear
+                      //TODO small
+                      onClick={() => this.startFrom(historyItem)}
+                    >
+                      <label>Von hier aus neu starten?</label>
+                      <ion-icon
+                        item-right
+                        name="idlogic-arrow-right"
+                      ></ion-icon>
+                    </button>
+                  </ion-card>
+                ))}
               </div>
 
               <div
@@ -766,7 +842,167 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   ngshow: this.view === "custom",
                 }}
               >
-                Custom TODO
+                <ion-item-divider class="idl-answer-heading idl-top">
+                  Zur Verfügung stehende Fragen
+                </ion-item-divider>
+                <ion-item
+                  class={{
+                    "idl-item-info": true,
+                    nghide: !(
+                      !this.nextQuestion?.question && !this.manualSelection
+                    ),
+                    ngshow:
+                      !this.nextQuestion?.question && !this.manualSelection,
+                  }}
+                  text-wrap
+                >
+                  Damit Fragen angezeigt werden, muss erst eine neue Bestimmung
+                  gestartet werden.
+                </ion-item>
+                <ion-item
+                  class={{
+                    "idl-item-info": true,
+                    nghide: !(
+                      this.customQuestionStatus ===
+                      this.CustomQuestionStatus.manualSelection
+                    ),
+                    ngshow:
+                      this.customQuestionStatus ===
+                      this.CustomQuestionStatus.manualSelection,
+                  }}
+                  text-wrap
+                >
+                  <b>Die Bestimmung ist beendet!</b>
+                  <br />
+                  <br />
+                  Finde und überprüfe Dein Ergebnis mit Hilfe der Bilder in der
+                  Artenliste.
+                  <br />
+                  <br />
+                  Um eine neue Bestimmung zu starten, bitte auf NEU drücken.
+                </ion-item>
+                <ion-item
+                  class={{
+                    "idl-item-info": true,
+                    nghide: !(
+                      this.customQuestionStatus ===
+                        this.CustomQuestionStatus.answersRequiredFirst &&
+                      this.missingAnswers === 1
+                    ),
+                    ngshow:
+                      this.customQuestionStatus ===
+                        this.CustomQuestionStatus.answersRequiredFirst &&
+                      this.missingAnswers === 1,
+                  }}
+                  text-wrap
+                >
+                  Eigene Fragen können erst ausgewählt werden, wenn noch eine
+                  weitere Frage beantwortet wird.
+                </ion-item>
+                <ion-item
+                  class={{
+                    "idl-item-info": true,
+                    nghide: !(
+                      this.customQuestionStatus ===
+                        this.CustomQuestionStatus.answersRequiredFirst &&
+                      this.missingAnswers > 1
+                    ),
+                    ngshow:
+                      this.customQuestionStatus ===
+                        this.CustomQuestionStatus.answersRequiredFirst &&
+                      this.missingAnswers > 1,
+                  }}
+                  text-wrap
+                >
+                  Eigene Fragen können erst ausgewählt werden, wenn zunächst
+                  {this.missingAnswers} Fragen beantwortet werden.
+                </ion-item>
+                <ion-item
+                  class={{
+                    "idl-item-info": true,
+                    nghide: !(
+                      this.customQuestionStatus ===
+                        this.CustomQuestionStatus.available &&
+                      this.customQuestions.length === 0
+                    ),
+                    ngshow:
+                      this.customQuestionStatus ===
+                        this.CustomQuestionStatus.available &&
+                      this.customQuestions.length === 0,
+                  }}
+                  text-wrap
+                >
+                  Es stehen keine weiteren Fragen zur Verfügung.
+                </ion-item>
+                <div
+                  class={{
+                    nghide: !(
+                      this.customQuestionStatus ===
+                      this.CustomQuestionStatus.available
+                    ),
+                    ngshow:
+                      this.customQuestionStatus ===
+                      this.CustomQuestionStatus.available,
+                  }}
+                >
+                  {this.customQuestions?.map((category) => (
+                    <div>
+                      <ion-item
+                        class="idl-custom-category"
+                        //TODO tappable
+                        onClick={() => (category.opened = !category.opened)}
+                      >
+                        <button item-start icon-only>
+                          <ion-icon
+                            name="idlogic-caret-right-b"
+                            class={{
+                              nghide: !!category.opened,
+                              ngshow: !category.opened,
+                            }}
+                          ></ion-icon>
+                          <ion-icon
+                            name="idlogic-caret-down-b"
+                            class={{
+                              nghide: !category.opened,
+                              ngshow: !!category.opened,
+                            }}
+                          ></ion-icon>
+                        </button>
+                        <ion-label>{category.text}</ion-label>
+                        <ion-badge item-end>{category.length}</ion-badge>
+                      </ion-item>
+                      <div
+                        class={{
+                          nghide: !category.opened,
+                          ngshow: !!category.opened,
+                        }}
+                      >
+                        <ion-item
+                          class={{
+                            "idl-custom-question": true,
+                            "idl-custom-category-selected":
+                              this.fixedCategory === category.text,
+                          }}
+                          text-wrap
+                          onClick={() =>
+                            this.selectCustomQuestionCategory(category)
+                          }
+                        >
+                          Nur Fragen aus dieser Kategorie
+                        </ion-item>
+                        {category.questions?.map((question) => (
+                          <ion-item
+                            class="idl-custom-question"
+                            text-wrap
+                            onClick={() => this.selectCustomQuestion(question)}
+                          >
+                            {question.questionShort}
+                          </ion-item>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </ion-list>
