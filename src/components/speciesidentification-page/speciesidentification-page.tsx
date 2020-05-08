@@ -23,17 +23,12 @@ import {
   shadow: true,
 })
 export class SpeciesidentificationPage implements ComponentInterface {
-  /*
-   * TODO id-logcis app
-   * - ....
-   */
   @Element() el: HTMLElement;
 
   /*
    * TODO stencil
-   * - loading / looadingController
+   * - loading / looadingController: id-logics app
    */
-  //@ViewChild(Slides) slides: Slides;
 
   @State() view: string = "";
   @State() fixedCategory: string = "";
@@ -67,10 +62,11 @@ export class SpeciesidentificationPage implements ComponentInterface {
   private _fixedCategory: Subscription = null;
   private _viewSizeChanged: Subscription = null;
 
-  constructor() {
-    console.log("ctors");
+  private _viewState: Subscription = null;
 
-    //mock
+  componentWillLoad() {
+
+    //mock, TODO rm  productive
     fetch("./data/index.json")
       .then((response: Response) => response.json())
       .then((responseJSON) => {
@@ -125,7 +121,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
         console.log("new status:" + status);
         switch (status) {
           case QuestionStatus.notStarted:
-            this.view = "new";
+            this.setView("new");
             this.noMoreInThisCategory = false;
             this.hideLoading();
             break;
@@ -135,21 +131,21 @@ export class SpeciesidentificationPage implements ComponentInterface {
             this.manualSelectionForced = false;
             this.noMoreInThisCategory = false;
             this.presentLoading();
-            this.view = "question";
+            this.setView("question");
             break;
           case QuestionStatus.resetting:
             console.log("resetting");
             this.manualSelection = false;
             this.manualSelectionForced = false;
             this.noMoreInThisCategory = false;
-            this.view = "question";
+            this.setView("question");
             break;
           case QuestionStatus.inProgress:
             this.hideLoading();
             this.manualSelection = false;
             this.manualSelectionForced = false;
             this.noMoreInThisCategory = false;
-            this.view = "question";
+            this.setView("question");
             break;
           case QuestionStatus.manualSelection:
             this.hideLoading();
@@ -198,6 +194,11 @@ export class SpeciesidentificationPage implements ComponentInterface {
 
     this._viewSizeChanged = DataService.viewSizeChanged.subscribe(() => {
       //TODO this.content.resize();
+    });
+
+    this._viewState = DataService.viewState.subscribe((view) => {
+      console.log("view changed page: ", view);
+      this.view = view;
     });
   }
 
@@ -264,11 +265,12 @@ export class SpeciesidentificationPage implements ComponentInterface {
 
   setView(view: string) {
     this.view = view;
+    DataService.viewState.next(view);
   }
 
   startFrom(historyItem) {
     DataService.resetToQuestionFromHistory(historyItem);
-    this.view = "question";
+    this.setView("question");
   }
 
   openVideo(videoUrl: string) {
@@ -289,7 +291,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
 
   selectCustomQuestion(question) {
     DataService.selectCustomQuestion(question);
-    this.view = "question";
+    this.setView("question");
   }
 
   selectCustomQuestionCategory(category) {
@@ -298,7 +300,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
       DataService.fixCustomCategory(undefined);
     } else {
       DataService.fixCustomCategory(category);
-      this.view = "question";
+      this.setView("question");
     }
   }
 
@@ -340,58 +342,12 @@ export class SpeciesidentificationPage implements ComponentInterface {
     this._customQuestionInfo.unsubscribe();
     this._fixedCategory.unsubscribe();
     this._viewSizeChanged.unsubscribe();
+
+    this._viewState.unsubscribe();
   }
 
   render() {
     return (
-      <il-page-identification class="ion-page show-page">
-        <ion-header
-          class={{
-            "idl-ruler-margin": this.showRuler,
-            "ion-header": true,
-          }}
-        >
-          <ion-navbar class="idl-navbar">
-            <ion-title>Bestimmung</ion-title>
-          </ion-navbar>
-          <img
-            class={{
-              ruler: true,
-              nghide: !this.showRuler,
-              ngshow: this.showRuler,
-            }}
-            src="assets/ruler_h.svg"
-          />
-          <div
-            class={{
-              "idl-segment-wrapper": true,
-              "idl-ruler-margin": this.showRuler,
-            }}
-          >
-            <ion-segment value={this.view}>
-              <ion-segment-button onClick={() => this.setView("question")}>
-                Frage
-              </ion-segment-button>
-              <ion-segment-button onClick={() => this.setView("history")}>
-                Verlauf
-              </ion-segment-button>
-              <ion-segment-button onClick={() => this.setView("custom")}>
-                Eigene
-              </ion-segment-button>
-              <ion-segment-button onClick={() => this.setView("new")}>
-                Neu
-              </ion-segment-button>
-            </ion-segment>
-          </div>
-        </ion-header>
-
-        <ion-content
-          no-bounce
-          class={{
-            "content": true,
-            "idl-ruler-margin": this.showRuler,
-          }}
-        >
           <ion-list
             class={{
               nghide: this.loading,
@@ -1012,8 +968,6 @@ export class SpeciesidentificationPage implements ComponentInterface {
               </div>
             </div>
           </ion-list>
-        </ion-content>
-      </il-page-identification>
     );
   }
 }

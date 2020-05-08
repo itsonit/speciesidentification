@@ -104,6 +104,8 @@ class DataServiceController {
   _hintStatus = {};
   _hintStack = '';
 
+  viewState: ReplaySubject<string> = new ReplaySubject(1);
+
   constructor(
     //TODO id-logics app
     /*public http: HttpClient,*/

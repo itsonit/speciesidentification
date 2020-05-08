@@ -10,6 +10,8 @@ export namespace Components {
     }
     interface SpeciesidentificationPage {
     }
+    interface SpeciesidentificationSegmentSwitch {
+    }
 }
 declare global {
     interface HTMLSpeciesPageElement extends Components.SpeciesPage, HTMLStencilElement {
@@ -24,9 +26,16 @@ declare global {
         prototype: HTMLSpeciesidentificationPageElement;
         new (): HTMLSpeciesidentificationPageElement;
     };
+    interface HTMLSpeciesidentificationSegmentSwitchElement extends Components.SpeciesidentificationSegmentSwitch, HTMLStencilElement {
+    }
+    var HTMLSpeciesidentificationSegmentSwitchElement: {
+        prototype: HTMLSpeciesidentificationSegmentSwitchElement;
+        new (): HTMLSpeciesidentificationSegmentSwitchElement;
+    };
     interface HTMLElementTagNameMap {
         "species-page": HTMLSpeciesPageElement;
         "speciesidentification-page": HTMLSpeciesidentificationPageElement;
+        "speciesidentification-segment-switch": HTMLSpeciesidentificationSegmentSwitchElement;
     }
 }
 declare namespace LocalJSX {
@@ -34,9 +43,12 @@ declare namespace LocalJSX {
     }
     interface SpeciesidentificationPage {
     }
+    interface SpeciesidentificationSegmentSwitch {
+    }
     interface IntrinsicElements {
         "species-page": SpeciesPage;
         "speciesidentification-page": SpeciesidentificationPage;
+        "speciesidentification-segment-switch": SpeciesidentificationSegmentSwitch;
     }
 }
 export { LocalJSX as JSX };
@@ -45,6 +57,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "species-page": LocalJSX.SpeciesPage & JSXBase.HTMLAttributes<HTMLSpeciesPageElement>;
             "speciesidentification-page": LocalJSX.SpeciesidentificationPage & JSXBase.HTMLAttributes<HTMLSpeciesidentificationPageElement>;
+            "speciesidentification-segment-switch": LocalJSX.SpeciesidentificationSegmentSwitch & JSXBase.HTMLAttributes<HTMLSpeciesidentificationSegmentSwitchElement>;
         }
     }
 }
