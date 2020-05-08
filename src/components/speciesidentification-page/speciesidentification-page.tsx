@@ -1,7 +1,11 @@
-import { Component, ComponentInterface, h, State } from "@stencil/core";
-
+import { Component, ComponentInterface, h, State, Element } from "@stencil/core";
 import { alertController, loadingController } from "@ionic/core";
 
+import '@ionic/core';
+
+//import {
+//  Slides
+//} from 'ionic-angular';
 import { Subscription } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
@@ -23,11 +27,13 @@ export class SpeciesidentificationPage implements ComponentInterface {
    * TODO id-logcis app
    * - ....
    */
+  @Element() el: HTMLElement;
 
   /*
    * TODO stencil
    * - loading / looadingController
    */
+  //@ViewChild(Slides) slides: Slides;
 
   @State() view: string = "";
   @State() fixedCategory: string = "";
@@ -304,14 +310,15 @@ export class SpeciesidentificationPage implements ComponentInterface {
   }
 
   pickerSelectOption() {
-    /* TODO
-    const activePickerIndex = this.slides.getActiveIndex();
-    const answer = this.nextQuestion.options[activePickerIndex];
-    if (!answer) {
-      console.log('Picker has selected invalid answer. slideIndex is ', activePickerIndex);
-      return;
-    }
-    this.selectOption(answer);*/
+    let slides = this.el.shadowRoot.querySelector('ion-slides');
+    slides.getActiveIndex().then(activePickerIndex => {
+      const answer = this.nextQuestion.options[activePickerIndex];
+      if (!answer) {
+        console.log('Picker has selected invalid answer. slideIndex is ', activePickerIndex);
+        return;
+      }
+      this.selectOption(answer);
+    });
   }
 
   skip() {
@@ -337,10 +344,9 @@ export class SpeciesidentificationPage implements ComponentInterface {
 
   render() {
     return (
-      <div>
-        <dic
+      <il-page-identification class="ion-page show-page">
+        <ion-header
           class={{
-            "idl-header": true,
             "idl-ruler-margin": this.showRuler,
             "ion-header": true,
           }}
@@ -377,12 +383,12 @@ export class SpeciesidentificationPage implements ComponentInterface {
               </ion-segment-button>
             </ion-segment>
           </div>
-        </dic>
+        </ion-header>
 
-        <div
+        <ion-content
           no-bounce
           class={{
-            "ion-content": true,
+            "content": true,
             "idl-ruler-margin": this.showRuler,
           }}
         >
@@ -677,13 +683,13 @@ export class SpeciesidentificationPage implements ComponentInterface {
                     <div class="idl-picker-wrapper">
                       <ion-icon
                         id="idlPickerArrowForward"
-                        name="md-arrow-forward"
-                        class="arrow-forward"
+                        name="arrow-forward"
+                        class="arrow-forward ion-ios-arrow-forward"
                         onClick={() => this.pickerSelectOption()}
                       ></ion-icon>
                       <div
                         class="idl-picker-container"
-                        onTouchMove={(event) =>
+                        /*onTouchMove={(event) =>
                           this.disableEventPropagation(event)
                         }
                         onTouchStart={(event) =>
@@ -691,7 +697,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
                         }
                         onMouseMove={(event) =>
                           this.disableEventPropagation(event)
-                        }
+                        }*/
                       >
                         <div class="wheel-rectangle"></div>
                         <ion-slides
@@ -807,8 +813,8 @@ export class SpeciesidentificationPage implements ComponentInterface {
                           ngshow: !historyItem.skipped,
                         }}
                       >
-                        <b>Antwort:</b> {historyItem.answer.text}
-                        {historyItem.answer.unit}
+                        <b>Antwort:</b> {historyItem.answer?.text}
+                        {historyItem.answer?.unit}
                       </h1>
                       <h1
                         class={{
@@ -1006,8 +1012,8 @@ export class SpeciesidentificationPage implements ComponentInterface {
               </div>
             </div>
           </ion-list>
-        </div>
-      </div>
+        </ion-content>
+      </il-page-identification>
     );
   }
 }

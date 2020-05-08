@@ -29,8 +29,10 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@angular/core": "^9.1.4",
     "@capacitor/core": "^2.0.1",
     "@ionic/core": "^5.1.0",
+    "ionic-angular": "^3.9.10",
     "moment": "^2.24.0",
     "rxjs": "^6.5.5",
     "tslib": "^1.11.1"
