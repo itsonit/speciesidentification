@@ -1,4 +1,4 @@
-import { Component, State, h, Listen } from '@stencil/core';
+import { Component, State, h } from '@stencil/core';
 
 import '@ionic/core';
 
@@ -47,14 +47,6 @@ export class SpeciesidentificationSegmentSwitch {
             <ion-navbar class="idl-navbar">
               <ion-title>Bestimmung</ion-title>
             </ion-navbar>
-            <img
-              class={{
-                ruler: true,
-                //TODO nghide: !this.showRuler,
-                //TODO ngshow: this.showRuler,
-              }}
-              src="assets/ruler_h.svg"
-            />
             <div
               class={{
                 "idl-segment-wrapper": true,

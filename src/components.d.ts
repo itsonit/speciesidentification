@@ -6,6 +6,10 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface CollapsibleContent {
+        "count": string;
+        "label": string;
+    }
     interface SpeciesPage {
     }
     interface SpeciesidentificationPage {
@@ -14,6 +18,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLCollapsibleContentElement extends Components.CollapsibleContent, HTMLStencilElement {
+    }
+    var HTMLCollapsibleContentElement: {
+        prototype: HTMLCollapsibleContentElement;
+        new (): HTMLCollapsibleContentElement;
+    };
     interface HTMLSpeciesPageElement extends Components.SpeciesPage, HTMLStencilElement {
     }
     var HTMLSpeciesPageElement: {
@@ -33,12 +43,17 @@ declare global {
         new (): HTMLSpeciesidentificationSegmentSwitchElement;
     };
     interface HTMLElementTagNameMap {
+        "collapsible-content": HTMLCollapsibleContentElement;
         "species-page": HTMLSpeciesPageElement;
         "speciesidentification-page": HTMLSpeciesidentificationPageElement;
         "speciesidentification-segment-switch": HTMLSpeciesidentificationSegmentSwitchElement;
     }
 }
 declare namespace LocalJSX {
+    interface CollapsibleContent {
+        "count"?: string;
+        "label"?: string;
+    }
     interface SpeciesPage {
     }
     interface SpeciesidentificationPage {
@@ -46,6 +61,7 @@ declare namespace LocalJSX {
     interface SpeciesidentificationSegmentSwitch {
     }
     interface IntrinsicElements {
+        "collapsible-content": CollapsibleContent;
         "species-page": SpeciesPage;
         "speciesidentification-page": SpeciesidentificationPage;
         "speciesidentification-segment-switch": SpeciesidentificationSegmentSwitch;
@@ -55,6 +71,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "collapsible-content": LocalJSX.CollapsibleContent & JSXBase.HTMLAttributes<HTMLCollapsibleContentElement>;
             "species-page": LocalJSX.SpeciesPage & JSXBase.HTMLAttributes<HTMLSpeciesPageElement>;
             "speciesidentification-page": LocalJSX.SpeciesidentificationPage & JSXBase.HTMLAttributes<HTMLSpeciesidentificationPageElement>;
             "speciesidentification-segment-switch": LocalJSX.SpeciesidentificationSegmentSwitch & JSXBase.HTMLAttributes<HTMLSpeciesidentificationSegmentSwitchElement>;
