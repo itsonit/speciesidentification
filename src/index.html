@@ -1,55 +1,143 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-  <title>Stencil Component Starter</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Stencil Component Starter</title>
 
-  <script type="module" src="/build/speciesidentification.esm.js"></script>
-  <script nomodule src="/build/speciesidentification.js"></script>
+    <script type="module" src="/build/speciesidentification.esm.js"></script>
+    <script nomodule src="/build/speciesidentification.js"></script>
 
-  <style>
+    <style>
+      body {
+        background-image: url(./assets/background.jpg);
+      }
 
+      @font-face {
+        font-family: "Ionicons";
+        src: url("./assets/fonts/ionicons.eot?v=3.0.0-alpha.3");
+        src: url("./assets/fonts/ionicons.eot?v=3.0.0-alpha.3#iefix")
+            format("embedded-opentype"),
+          url("./assets/fonts/ionicons.woff2?v=3.0.0-alpha.3") format("woff2"),
+          url("./assets/fonts/ionicons.woff?v=3.0.0-alpha.3") format("woff"),
+          url("./assets/fonts/ionicons.ttf?v=3.0.0-alpha.3") format("truetype"),
+          url("./assets/fonts/ionicons.svg?v=3.0.0-alpha.3#Ionicons")
+            format("svg");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "idlogics_icons";
+        src: url("./assets/fonts/ID-LogicsIcons.ttf");
+        src: url("./assets/fonts/ID-LogicsIcons.eot");
+        src: url("./assets/fonts/ID-LogicsIcons.eot?#iefix")
+            format("embedded-opentype"),
+          url("./assets/fonts/ID-LogicsIcons.woff2") format("woff2"),
+          url("./assets/fonts/ID-LogicsIcons.woff") format("woff"),
+          url("./assets/fonts/ID-LogicsIcons.svg#idlogics_iconsregular")
+            format("svg");
+        font-weight: normal;
+        font-style: normal;
+      }
 
-@font-face {
-  font-family: "Ionicons";
-  src: url("./assets/fonts/ionicons.eot?v=3.0.0-alpha.3");
-  src: url("./assets/fonts/ionicons.eot?v=3.0.0-alpha.3#iefix") format("embedded-opentype"), url("./assets/fonts/ionicons.woff2?v=3.0.0-alpha.3") format("woff2"), url("./assets/fonts/ionicons.woff?v=3.0.0-alpha.3") format("woff"), url("./assets/fonts/ionicons.ttf?v=3.0.0-alpha.3") format("truetype"), url("./assets/fonts/ionicons.svg?v=3.0.0-alpha.3#Ionicons") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'idlogics_icons';
-  src: url("./assets/fonts/ID-LogicsIcons.ttf");
-  src: url("./assets/fonts/ID-LogicsIcons.eot");
-  src: url("./assets/fonts/ID-LogicsIcons.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/ID-LogicsIcons.woff2") format("woff2"), url("./assets/fonts/ID-LogicsIcons.woff") format("woff"), url("./assets/fonts/ID-LogicsIcons.svg#idlogics_iconsregular") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
+      @font-face {
+        font-family: "titillium_web";
+        src: url("./assets/fonts/titilliumweb-bold-webfont.eot");
+        src: url("./assets/fonts/titilliumweb-bold-webfont.eot?#iefix")
+            format("embedded-opentype"),
+          url("./assets/fonts/titilliumweb-bold-webfont.woff2") format("woff2"),
+          url("./assets/fonts/titilliumweb-bold-webfont.woff") format("woff"),
+          url("./assets/titilliumweb-bold.ttf") format("truetype"),
+          url("./assets/fonts/titilliumweb-bold-webfont.svg#titillium_webbold")
+            format("svg");
+        font-weight: bold;
+        font-style: normal;
+      }
 
+      @font-face {
+        font-family: "titillium_web";
+        src: url("./assets/fonts/titilliumweb-bolditalic-webfont.eot");
+        src: url("./assets/fonts/titilliumweb-bolditalic-webfont.eot?#iefix")
+            format("embedded-opentype"),
+          url("./assets/fonts/titilliumweb-bolditalic-webfont.woff2")
+            format("woff2"),
+          url("./assets/fonts/titilliumweb-bolditalic-webfont.woff")
+            format("woff"),
+          url("./assets/titilliumweb-bolditalic.ttf") format("truetype"),
+          url("./assets/fonts/titilliumweb-bolditalic-webfont.svg#titillium_webbold_italic")
+            format("svg");
+        font-weight: bold;
+        font-style: italic;
+      }
 
+      @font-face {
+        font-family: "titillium_web";
+        src: url("./assets/fonts/titilliumweb-italic-webfont.eot");
+        src: url("./assets/fonts/titilliumweb-italic-webfont.eot?#iefix")
+            format("embedded-opentype"),
+          url("./assets/fonts/titilliumweb-italic-webfont.woff2")
+            format("woff2"),
+          url("./assets/fonts/titilliumweb-italic-webfont.woff") format("woff"),
+          url("./assets/titilliumweb-italic.ttf") format("truetype"),
+          url("./assets/fonts/titilliumweb-italic-webfont.svg#titillium_webitalic")
+            format("svg");
+        font-weight: normal;
+        font-style: italic;
+      }
 
-[class^='icon-'],
-[class*=' icon-'],
-[class^='ion-ios-icon'],
-[class*='ion-ios-icon'],
-[class^='ion-md-icon'],
-[class*='ion-md-icon'] {
-  font-family: 'idlogics_icons' !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-}
+      @font-face {
+        font-family: "titillium_web";
+        src: url("./assets/fonts/titilliumweb-light-webfont.eot");
+        src: url("./assets/fonts/titilliumweb-light-webfont.eot?#iefix")
+            format("embedded-opentype"),
+          url("./assets/fonts/titilliumweb-light-webfont.woff2") format("woff2"),
+          url("./assets/fonts/titilliumweb-light-webfont.woff") format("woff"),
+          url("./assets/titilliumweb-light.ttf") format("truetype"),
+          url("./assets/fonts/titilliumweb-light-webfont.svg#titillium_weblight")
+            format("svg");
+        font-weight: normal;
+        font-style: normal;
+      }
 
-  </style>
-</head>
-<body>
-  <speciesidentification-segment-switch></speciesidentification-segment-switch>
-  <br/><br/>
-  <speciesidentification-page></speciesidentification-page>
-  <species-page></species-page>
-</body>
+      @font-face {
+        font-family: "titillium_web";
+        src: url("./assets/fonts/titilliumweb-lightitalic-webfont.eot");
+        src: url("./assets/fonts/titilliumweb-lightitalic-webfont.eot?#iefix")
+            format("embedded-opentype"),
+          url("./assets/fonts/titilliumweb-lightitalic-webfont.woff2")
+            format("woff2"),
+          url("./assets/fonts/titilliumweb-lightitalic-webfont.woff")
+            format("woff"),
+          url("./assets/titilliumweb-lightitalic.ttf") format("truetype"),
+          url("./assets/fonts/titilliumweb-lightitalic-webfont.svg#titillium_weblight_italic")
+            format("svg");
+        font-weight: normal;
+        font-style: italic;
+      }
+
+      @font-face {
+        font-family: "titillium_web";
+        src: url("./assets/fonts/titilliumweb-regular-webfont.eot");
+        src: url("./assets/fonts/titilliumweb-regular-webfont.eot?#iefix")
+            format("embedded-opentype"),
+          url("./assets/fonts/titilliumweb-regular-webfont.woff2")
+            format("woff2"),
+          url("./assets/fonts/titilliumweb-regular-webfont.woff") format("woff"),
+          url("./assets/titilliumweb-regular.ttf") format("truetype"),
+          url("./assets/fonts/titilliumweb-regular-webfont.svg#titillium_webregular")
+            format("svg");
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <speciesidentification-segment-switch></speciesidentification-segment-switch>
+    <br /><br />
+    <speciesidentification-page></speciesidentification-page>
+    <species-page></species-page>
+  </body>
 </html>

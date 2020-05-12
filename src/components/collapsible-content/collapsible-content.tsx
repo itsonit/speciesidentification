@@ -24,11 +24,15 @@ export class CollapsibleContent {
           onClick={() => {
             this.toggle();
           }}
+          mode="ios"
+          lines="none"
         >
-          <button item-start icon-only>
+
             <ion-icon
               name="idlogic-caret-right-b"
               class={{
+                'ion-ios-idlogic-caret-right-b': true,
+                'ion-ios-icon': true,
                 nghide: !!this.collapsed,
                 ngshow: !this.collapsed,
               }}
@@ -36,13 +40,17 @@ export class CollapsibleContent {
             <ion-icon
               name="idlogic-caret-down-b"
               class={{
+                'ion-ios-idlogic-caret-down-b': true,
+                'ion-ios-icon': true,
                 nghide: !this.collapsed,
                 ngshow: !!this.collapsed,
               }}
             ></ion-icon>
-          </button>
-          <ion-label>{this.label}</ion-label>
-          <ion-badge item-end>{this.count}</ion-badge>
+
+          <div class="input-wrapper">
+            <ion-label mode="ios">{this.label}</ion-label>
+          </div>
+          <ion-badge class="badge badge-ios" item-end>{this.count}</ion-badge>
         </ion-item>
         <div hidden={!this.collapsed}>
           <slot />

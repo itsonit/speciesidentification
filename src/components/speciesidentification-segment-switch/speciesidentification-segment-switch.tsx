@@ -29,6 +29,7 @@ export class SpeciesidentificationSegmentSwitch {
 
   chooseSegment(view: string) {
     this.view = view;
+    console.log("chooseSegment: " + view);
     DataService.viewState.next(view);
   }
 
@@ -38,37 +39,31 @@ export class SpeciesidentificationSegmentSwitch {
 
   render() {
     return (
-          <ion-header
-            class={{
-              //TODO "idl-ruler-margin": this.showRuler,
-              "ion-header": true,
-            }}
-          >
-            <ion-navbar class="idl-navbar">
-              <ion-title>Bestimmung</ion-title>
-            </ion-navbar>
+
             <div
               class={{
                 "idl-segment-wrapper": true,
                 //TODO "idl-ruler-margin": this.showRuler,
               }}
             >
-              <ion-segment value={this.view}>
-                <ion-segment-button onClick={() => this.chooseSegment("question")}>
+              <ion-segment value={this.view} class={{
+                "segment": true,
+                "segment-ios": true
+              }}>
+                <ion-segment-button value="question" class="segment-button" onClick={() => this.chooseSegment("question")}>
                   Frage
                 </ion-segment-button>
-                <ion-segment-button onClick={() => this.chooseSegment("history")}>
+                <ion-segment-button value="history" class="segment-button" onClick={() => this.chooseSegment("history")}>
                   Verlauf
                 </ion-segment-button>
-                <ion-segment-button onClick={() => this.chooseSegment("custom")}>
+                <ion-segment-button value="custom" class="segment-button" onClick={() => this.chooseSegment("custom")}>
                   Eigene
                 </ion-segment-button>
-                <ion-segment-button onClick={() => this.chooseSegment("new")}>
+                <ion-segment-button value="new" class="segment-button" onClick={() => this.chooseSegment("new")}>
                   Neu
                 </ion-segment-button>
               </ion-segment>
             </div>
-          </ion-header>
     );
   }
 

@@ -371,15 +371,20 @@ export class SpeciesidentificationPage implements ComponentInterface {
             }}
           >
             <ion-item-divider class="idl-answer-heading idl-top">
-              Neue Bestimmung beginnen
+              <ion-label>Neue Bestimmung beginnen</ion-label>
             </ion-item-divider>
-            <ion-item class="idl-item-info" text-wrap>
-              <b>Achtung:</b> Wenn Du eine neue Bestimmung startest, wird die
-              aktuelle Bestimmung verworfen!
+            <ion-item class="idl-item-info item item-block item-ios" text-wrap mode="ios" lines="none">
+              <div class="input-wrapper">
+                <ion-label mode="ios">
+                <b>Achtung:</b> Wenn Du eine neue Bestimmung startest, wird die
+                  aktuelle Bestimmung verworfen!
+                </ion-label>
+              </div>
             </ion-item>
+
             <button
               ion-item
-              class="idl-item-info"
+              class="idl-item-info item item-block item-ios"
               text-center
               detail-none
               onClick={() => {
@@ -387,7 +392,14 @@ export class SpeciesidentificationPage implements ComponentInterface {
                 this.new();
               }}
             >
-              Neue Bestimmung starten
+              <div class="item-inner">
+                <div class="input-wrapper">
+                  <ion-label class="label label-ios">
+                    Neue Bestimmung starten
+                  </ion-label>
+                </div>
+              </div>
+              <div class="button-effect"></div>
             </button>
           </div>
           <div
@@ -397,6 +409,8 @@ export class SpeciesidentificationPage implements ComponentInterface {
             }}
           >
             <ion-item
+              mode="ios"
+              lines="none"
               class={{
                 "idl-item-info": true,
                 "idl-top": true,
@@ -404,16 +418,22 @@ export class SpeciesidentificationPage implements ComponentInterface {
                 ngshow: this.manualSelection && !this.manualSelectionForced,
               }}
             >
-              <b>Die Bestimmung ist beendet!</b>
-              <br />
-              <br />
-              Finde und überprüfe Dein Ergebnis mit Hilfe der Bilder in der
-              Artenliste.
-              <br />
-              <br />
-              Um eine neue Bestimmung zu starten, bitte auf NEU drücken.
+              <div class="input-wrapper">
+                <ion-label mode="ios">
+                  <b>Die Bestimmung ist beendet!</b>
+                  <br />
+                  <br />
+                  Finde und überprüfe Dein Ergebnis mit Hilfe der Bilder in der
+                  Artenliste.
+                  <br />
+                  <br />
+                  Um eine neue Bestimmung zu starten, bitte auf NEU drücken.
+                </ion-label>
+              </div>
             </ion-item>
             <ion-item
+              mode="ios"
+              lines="none"
               class={{
                 "idl-item-info": true,
                 "idl-top": true,
@@ -421,13 +441,19 @@ export class SpeciesidentificationPage implements ComponentInterface {
                 ngshow: this.manualSelection && this.manualSelectionForced,
               }}
             >
-              Es stehen keine weiteren Fragen zur Verfügung. Finde Deine Art
-              mithilfe der Bilder in der Artenliste oder überdenke Deine
-              Antworten im Verlauf. <br />
-              <br />
-              Um eine neue Bestimmung zu starten, bitte auf NEU drücken.
+              <div class="input-wrapper">
+                <ion-label mode="ios">
+                Es stehen keine weiteren Fragen zur Verfügung. Finde Deine Art
+                mithilfe der Bilder in der Artenliste oder überdenke Deine
+                Antworten im Verlauf. <br />
+                <br />
+                Um eine neue Bestimmung zu starten, bitte auf NEU drücken.
+                </ion-label>
+              </div>
             </ion-item>
             <ion-item
+              mode="ios"
+              lines="none"
               class={{
                 "idl-item-info": true,
                 "idl-top": true,
@@ -442,10 +468,16 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   !this.noMoreInThisCategory,
               }}
             >
-              Damit eine Frage angezeigt wird, muss erst eine neue Bestimmung
-              gestartet werden.
+              <div class="input-wrapper">
+                <ion-label mode="ios">
+                Damit eine Frage angezeigt wird, muss erst eine neue Bestimmung
+                gestartet werden.
+                </ion-label>
+              </div>
             </ion-item>
             <ion-item
+              mode="ios"
+              lines="none"
               class={{
                 "idl-item-info": true,
                 "idl-top": true,
@@ -453,8 +485,12 @@ export class SpeciesidentificationPage implements ComponentInterface {
                 ngshow: this.noMoreInThisCategory,
               }}
             >
-              In der Kategorie <i>{this.fixedCategory}</i> gibt es keine
-              weiteren möglichen Fragen.
+              <div class="input-wrapper">
+                <ion-label mode="ios">
+                In der Kategorie <i>{this.fixedCategory}</i> gibt es keine
+                weiteren möglichen Fragen.
+                </ion-label>
+              </div>
             </ion-item>
             <div
               class={{
@@ -475,8 +511,12 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   "with-button": !!this.nextQuestion?.video,
                 }}
                 text-wrap
+                mode="ios"
+                lines="none"
               >
-                {this.nextQuestion?.question}
+                <div class="input-wrapper">
+                  <ion-label mode="ios">{this.nextQuestion?.question}</ion-label>
+                </div>
                 <button
                   ion-button
                   item-end
@@ -499,7 +539,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
                 />
               </ion-item>
               <ion-item-divider class="idl-answer-heading">
-                Antwort auswählen
+                <ion-label>Antwort auswählen</ion-label>
               </ion-item-divider>
               <div
                 class={{
@@ -508,7 +548,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   ngshow: this.nextQuestion?.typeId === 0,
                 }}
               >
-                <ion-item class="idl-slider-option">
+                <ion-item class="idl-slider-option" mode="ios" lines="none">
                   <ion-label>
                     <img
                       src={this.nextQuestion?.options[this.sliderIndex].url}
@@ -538,12 +578,12 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   ngshow: this.nextQuestion?.typeId === 1,
                 }}
               >
-                <ion-grid>
+                <ion-grid class="grid">
                   <ion-row>
                     {this.nextQuestion?.options.map((option) => (
                       <ion-col col-4>
                         <button
-                          class="idl-image-option"
+                          class="idl-image-option button button-ios button-clear button-clear-ios"
                           ion-button
                           //TODO clear
                           onClick={() => this.selectOption(option)}
@@ -557,8 +597,8 @@ export class SpeciesidentificationPage implements ComponentInterface {
                           />
                           <h2
                             class={{
-                              nghide: !option.url,
-                              ngshow: !!option.url,
+                              nghide: !!option.url,
+                              ngshow: !option.url,
                             }}
                           >
                             {option.text}
@@ -691,7 +731,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
                     {this.nextQuestion?.options.map((option) => (
                       <ion-col col-4>
                         <button
-                          class="idl-image-option"
+                          class="idl-image-option button button-ios button-clear button-clear-ios"
                           ion-button
                           //TODO clear
                           onClick={() => this.selectOption(option)}
@@ -718,13 +758,16 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   ngshow: this.showSkipOption,
                 }}
               >
-                Keine Antwort
+                <ion-label>Keine Antwort</ion-label>
               </ion-item-divider>
               <button
                 ion-item
                 class={{
                   "idl-item-info": true,
                   "idl-wrap-button": true,
+                  "item": true,
+                  "item-block": true,
+                  "item-ios": true,
                   nghide: !this.showSkipOption,
                   ngshow: this.showSkipOption,
                 }}
@@ -732,7 +775,14 @@ export class SpeciesidentificationPage implements ComponentInterface {
                 detail-none
                 onClick={() => this.skip()}
               >
-                Nächste Frage
+              <div class="item-inner">
+                <div class="input-wrapper">
+                  <ion-label class="label label-ios">
+                    Nächste Frage
+                  </ion-label>
+                </div>
+              </div>
+              <div class="button-effect"></div>
               </button>
             </div>
           </div>
@@ -743,26 +793,36 @@ export class SpeciesidentificationPage implements ComponentInterface {
             }}
           >
             <ion-item-divider class="idl-answer-heading idl-top">
-              Fragen Historie
+              <ion-label>Fragen Historie</ion-label>
             </ion-item-divider>
             <ion-item
+              mode="ios"
+              lines="none"
               class={{
                 "idl-item-info": true,
                 nghide: this.history?.length !== 0,
                 ngshow: this.history?.length === 0,
               }}
             >
-              Es wurden noch keine Fragen beantwortet!
+              <div class="input-wrapper">
+                <ion-label mode="ios">
+                  Es wurden noch keine Fragen beantwortet!
+                </ion-label>
+              </div>
             </ion-item>
 
             {this.history?.map((historyItem) => (
               <ion-card class="idl-history" ion-item>
-                <ion-item>
+                <ion-item
+                  mode="ios"
+                  lines="none">
                   <h2>
                     {historyItem.index}.{historyItem.question.questionShort}
                   </h2>
                 </ion-item>
-                <ion-item text-wrap>
+                <ion-item text-wrap
+                  mode="ios"
+                  lines="none">
                   <h1>
                     <b>Frage:</b> {historyItem.question.question}
                   </h1>
@@ -791,8 +851,10 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   //TODO small
                   onClick={() => this.startFrom(historyItem)}
                 >
-                  <label>Von hier aus neu starten?</label>
-                  <ion-icon item-right name="idlogic-arrow-right"></ion-icon>
+                  <div class="input-wrapper">
+                    <label>Von hier aus neu starten?</label>
+                  </div>
+                  <ion-icon item-right name="idlogic-arrow-right" class="idlogic-arrow-right ion-ios-dlogic-arrow-right ion-ios-icon"></ion-icon>
                 </button>
               </ion-card>
             ))}
@@ -805,9 +867,11 @@ export class SpeciesidentificationPage implements ComponentInterface {
             }}
           >
             <ion-item-divider class="idl-answer-heading idl-top">
-              Zur Verfügung stehende Fragen
+              <ion-label>Zur Verfügung stehende Fragen</ion-label>
             </ion-item-divider>
             <ion-item
+              mode="ios"
+              lines="none"
               class={{
                 "idl-item-info": true,
                 nghide: !(
@@ -817,10 +881,16 @@ export class SpeciesidentificationPage implements ComponentInterface {
               }}
               text-wrap
             >
-              Damit Fragen angezeigt werden, muss erst eine neue Bestimmung
-              gestartet werden.
+            <div class="input-wrapper">
+              <ion-label mode="ios">
+                Damit Fragen angezeigt werden, muss erst eine neue Bestimmung
+                gestartet werden.
+              </ion-label>
+            </div>
             </ion-item>
             <ion-item
+              mode="ios"
+              lines="none"
               class={{
                 "idl-item-info": true,
                 nghide: !(
@@ -832,17 +902,22 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   this.CustomQuestionStatus.manualSelection,
               }}
               text-wrap
-            >
-              <b>Die Bestimmung ist beendet!</b>
-              <br />
-              <br />
-              Finde und überprüfe Dein Ergebnis mit Hilfe der Bilder in der
-              Artenliste.
-              <br />
-              <br />
-              Um eine neue Bestimmung zu starten, bitte auf NEU drücken.
+            > <div class="input-wrapper">
+                <ion-label mode="ios">
+                  <b>Die Bestimmung ist beendet!</b>
+                  <br />
+                  <br />
+                  Finde und überprüfe Dein Ergebnis mit Hilfe der Bilder in der
+                  Artenliste.
+                  <br />
+                  <br />
+                  Um eine neue Bestimmung zu starten, bitte auf NEU drücken.
+                </ion-label>
+            </div>
             </ion-item>
             <ion-item
+              mode="ios"
+              lines="none"
               class={{
                 "idl-item-info": true,
                 nghide: !(
@@ -857,10 +932,16 @@ export class SpeciesidentificationPage implements ComponentInterface {
               }}
               text-wrap
             >
-              Eigene Fragen können erst ausgewählt werden, wenn noch eine
-              weitere Frage beantwortet wird.
+              <div class="input-wrapper">
+                <ion-label mode="ios">
+                Eigene Fragen können erst ausgewählt werden, wenn noch eine
+                weitere Frage beantwortet wird.
+                </ion-label>
+              </div>
             </ion-item>
             <ion-item
+              mode="ios"
+              lines="none"
               class={{
                 "idl-item-info": true,
                 nghide: !(
@@ -875,10 +956,16 @@ export class SpeciesidentificationPage implements ComponentInterface {
               }}
               text-wrap
             >
-              Eigene Fragen können erst ausgewählt werden, wenn zunächst
-              {this.missingAnswers} Fragen beantwortet werden.
+              <div class="input-wrapper">
+                <ion-label mode="ios">
+                Eigene Fragen können erst ausgewählt werden, wenn zunächst
+                {this.missingAnswers} Fragen beantwortet werden.
+                </ion-label>
+              </div>
             </ion-item>
             <ion-item
+              mode="ios"
+              lines="none"
               class={{
                 "idl-item-info": true,
                 nghide: !(
@@ -893,7 +980,11 @@ export class SpeciesidentificationPage implements ComponentInterface {
               }}
               text-wrap
             >
-              Es stehen keine weiteren Fragen zur Verfügung.
+              <div class="input-wrapper">
+                <ion-label mode="ios">
+                  Es stehen keine weiteren Fragen zur Verfügung.
+                </ion-label>
+              </div>
             </ion-item>
             <div
               class={{
@@ -907,8 +998,13 @@ export class SpeciesidentificationPage implements ComponentInterface {
               }}
             >
               {this.customQuestions?.map((category) => (
-                <collapsible-content label={category.text} count={category.length}>
+                <collapsible-content
+                  label={category.text}
+                  count={category.length}
+                >
                   <ion-item
+                    mode="ios"
+                    lines="none"
                     class={{
                       "idl-custom-question": true,
                       "idl-custom-category-selected":
@@ -917,15 +1013,25 @@ export class SpeciesidentificationPage implements ComponentInterface {
                     text-wrap
                     onClick={() => this.selectCustomQuestionCategory(category)}
                   >
-                    Nur Fragen aus dieser Kategorie
+                    <div class="input-wrapper">
+                      <ion-label mode="ios">
+                        Nur Fragen aus dieser Kategorie
+                      </ion-label>
+                    </div>
                   </ion-item>
                   {category.questions?.map((question) => (
                     <ion-item
+                      mode="ios"
+                      lines="none"
                       class="idl-custom-question"
                       text-wrap
                       onClick={() => this.selectCustomQuestion(question)}
                     >
-                      {question.questionShort}
+                      <div class="input-wrapper">
+                        <ion-label mode="ios">
+                          {question.questionShort}
+                        </ion-label>
+                      </div>
                     </ion-item>
                   ))}
                 </collapsible-content>
