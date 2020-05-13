@@ -3,7 +3,7 @@ import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
 import { ReplaySubject, Subject } from 'rxjs';
 
-import moment from 'moment';
+import moment from 'moment/moment';
 
 import {
   GlossaryEntry,
