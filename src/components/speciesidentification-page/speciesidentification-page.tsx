@@ -4,6 +4,8 @@ import {
   h,
   State,
   Element,
+  Prop,
+  Watch
 } from "@stencil/core";
 import { alertController, loadingController } from "@ionic/core";
 
@@ -35,6 +37,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
    * TODO stencil
    * - loading / looadingController: id-logics app
    */
+  @Prop({ reflect: true }) json: any;
 
   @State() view: string = "";
   @State() fixedCategory: string = "";
@@ -71,15 +74,18 @@ export class SpeciesidentificationPage implements ComponentInterface {
 
   private _viewState: Subscription = null;
 
-  componentWillLoad() {
-    //mock, TODO rm  productive
-    fetch("./data/index.json")
-      .then((response: Response) => response.json())
-      .then((responseJSON) => {
-        console.log(responseJSON);
-        DataService.setSpeciesGroup(responseJSON[0]);
-      });
+  @Watch('json')
+  watchHandler(newValue: any, oldValue: any) {
+    DataService.setSpeciesGroup(newValue);
+    this.setSpeciesGroup();
+  }
 
+  componentWillRender() {
+    console.log("willrender");
+    console.log("prop2", this.json);
+  }
+
+  setSpeciesGroup() {
     this._nextQuestion = DataService.nextQuestion.subscribe((question) => {
       this.nextQuestion = question;
       if (!question) {

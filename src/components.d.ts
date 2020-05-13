@@ -13,6 +13,7 @@ export namespace Components {
     interface SpeciesPage {
     }
     interface SpeciesidentificationPage {
+        "json": any;
     }
     interface SpeciesidentificationSegmentSwitch {
     }
@@ -57,6 +58,7 @@ declare namespace LocalJSX {
     interface SpeciesPage {
     }
     interface SpeciesidentificationPage {
+        "json"?: any;
     }
     interface SpeciesidentificationSegmentSwitch {
     }
