@@ -75,7 +75,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
   private _viewState: Subscription = null;
 
   @Watch('json')
-  watchHandler(newValue: any, oldValue: any) {
+  watchHandler(newValue: any) {
     DataService.setSpeciesGroup(newValue);
     this.setSpeciesGroup();
   }
