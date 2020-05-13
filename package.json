@@ -22,7 +22,7 @@
     "generate": "stencil generate"
   },
   "devDependencies": {
-    "@stencil/core": "1.12.6",
+    "@stencil/core": "1.13.0",
     "@stencil/store": "^1.1.0",
     "@types/lodash": "^4.14.150",
     "lodash": "^4.17.15"
