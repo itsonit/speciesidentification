@@ -9,41 +9,43 @@
 
 ### Depends on
 
-- ion-title
-- ion-segment
-- ion-segment-button
 - ion-list
 - ion-item-divider
+- ion-label
 - ion-item
 - ion-icon
-- ion-label
 - ion-range
 - ion-grid
 - ion-row
 - ion-col
 - ion-slides
 - ion-slide
+- ion-card
+- [collapsible-content](../collapsible-content)
 
 ### Graph
 ```mermaid
 graph TD;
-  speciesidentification-page --> ion-title
-  speciesidentification-page --> ion-segment
-  speciesidentification-page --> ion-segment-button
   speciesidentification-page --> ion-list
   speciesidentification-page --> ion-item-divider
+  speciesidentification-page --> ion-label
   speciesidentification-page --> ion-item
   speciesidentification-page --> ion-icon
-  speciesidentification-page --> ion-label
   speciesidentification-page --> ion-range
   speciesidentification-page --> ion-grid
   speciesidentification-page --> ion-row
   speciesidentification-page --> ion-col
   speciesidentification-page --> ion-slides
   speciesidentification-page --> ion-slide
-  ion-segment-button --> ion-ripple-effect
+  speciesidentification-page --> ion-card
+  speciesidentification-page --> collapsible-content
   ion-item --> ion-icon
   ion-item --> ion-ripple-effect
+  ion-card --> ion-ripple-effect
+  collapsible-content --> ion-item
+  collapsible-content --> ion-icon
+  collapsible-content --> ion-label
+  collapsible-content --> ion-badge
   style speciesidentification-page fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
