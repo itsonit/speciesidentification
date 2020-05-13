@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property | Attribute | Description | Type  | Default     |
+| -------- | --------- | ----------- | ----- | ----------- |
+| `json`   | `json`    |             | `any` | `undefined` |
+
+
 ## Dependencies
 
 ### Depends on
