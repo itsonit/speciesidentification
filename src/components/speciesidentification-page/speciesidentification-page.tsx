@@ -522,13 +522,21 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   item-end
                   icon-only
                   class={{
+                    "button": true,
+                    "button-ios": true,
+                    "button-default": true,
+                    "button-default-ios": true,
+                    "item-button": true,
                     "idl-questionmark": true,
-                    nghide: !this.nextQuestion?.video,
-                    ngshow: !!this.nextQuestion?.video,
+                    nghide: true
+                    //TODO nghide: !this.nextQuestion?.video,
+                    //TODO ngshow: !!this.nextQuestion?.video,
                   }}
                   onClick={() => this.openVideo(this.nextQuestion?.video)}
                 >
-                  <ion-icon name="idlogic-question-mark"></ion-icon>
+                  <span class="button-inner">
+                    <ion-icon name="idlogic-question-mark" class="ion-ios-idlogic-question-mark ion-ios-icon"></ion-icon>
+                  </span>
                 </button>
                 <img
                   src={this.nextQuestion?.image}
@@ -559,7 +567,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
                     item-right
                     onClick={() => this.nextQuestion?.options[this.sliderIndex]}
                   >
-                    <ion-icon name="idlogic-arrow-right"></ion-icon>
+                    <ion-icon name="idlogic-arrow-right" class="ion-ios-idlogic-arrow-right ion-ios-icon"></ion-icon>
                   </button>
                   <ion-range
                     min={0}
@@ -845,16 +853,20 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   </h1>
                 </ion-item>
                 <button
-                  ion-item
+                  class="item item-block item-ios"
                   icon-left
                   //TODO clear
                   //TODO small
                   onClick={() => this.startFrom(historyItem)}
                 >
-                  <div class="input-wrapper">
-                    <label>Von hier aus neu starten?</label>
+                  <div class="item-inner">
+                    <div class="input-wrapper">
+                      <ion-label class="label label-ios">
+                        <label>Von hier aus neu starten?</label>
+                      </ion-label>
+                    </div>
+                    <ion-icon item-right name="idlogic-arrow-right" class="ion-ios-idlogic-arrow-right ion-ios-icon"></ion-icon>
                   </div>
-                  <ion-icon item-right name="idlogic-arrow-right" class="idlogic-arrow-right ion-ios-dlogic-arrow-right ion-ios-icon"></ion-icon>
                 </button>
               </ion-card>
             ))}
@@ -1006,6 +1018,8 @@ export class SpeciesidentificationPage implements ComponentInterface {
                     mode="ios"
                     lines="none"
                     class={{
+                      "item-block": true,
+                      "item-ios": true,
                       "idl-custom-question": true,
                       "idl-custom-category-selected":
                         this.fixedCategory === category.text,
@@ -1013,24 +1027,28 @@ export class SpeciesidentificationPage implements ComponentInterface {
                     text-wrap
                     onClick={() => this.selectCustomQuestionCategory(category)}
                   >
+                    <div class="item-inner">
                     <div class="input-wrapper">
-                      <ion-label mode="ios">
+                      <ion-label mode="ios" class="label label-ios">
                         Nur Fragen aus dieser Kategorie
                       </ion-label>
+                    </div>
                     </div>
                   </ion-item>
                   {category.questions?.map((question) => (
                     <ion-item
                       mode="ios"
                       lines="none"
-                      class="idl-custom-question"
+                      class="idl-custom-question item-block item-ios"
                       text-wrap
                       onClick={() => this.selectCustomQuestion(question)}
                     >
+                       <div class="item-inner">
                       <div class="input-wrapper">
-                        <ion-label mode="ios">
+                        <ion-label mode="ios" class="label label-ios">
                           {question.questionShort}
                         </ion-label>
+                      </div>
                       </div>
                     </ion-item>
                   ))}
