@@ -134,7 +134,7 @@ class DatabaseServiceController {
    * @param {string} assetBaseUrl
    * @returns {Promise<void>}
    */
-  initialize(filename: string, baseUrl: string, fileSystemBase?: string): Promise<void> {
+  initialize(filename: string, baseUrl: string, fileSystemBase?: string, httpheader?: any): Promise<void> {
 console.log(baseUrl + filename);
 
     this.assetBaseUrl = baseUrl;
@@ -145,7 +145,9 @@ console.log("this.useFileSystem", this.useFileSystem);
 
     const retrievedFilePromise = this.useFileSystem
       ? File.readAsText(File.dataDirectory, this.fileSystemBase + filename).then(text => JSON.parse(text))
-      : fetch(baseUrl + filename);
+      : fetch(baseUrl + filename, {
+        method: 'get',
+        headers: new Headers(httpheader)});
 
 
     return retrievedFilePromise

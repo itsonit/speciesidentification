@@ -34,7 +34,6 @@ export class SpeciesPage {
   render() {
     return (
       <div>
-        <p>SpeciesPage</p>
         <ul>
         {this.allSpeciesByName?.map((species) => (
           <li>{species.name}</li>

@@ -53,7 +53,10 @@ export type CustomQuestionInfo = {
 };
 
 class DataServiceController {
+  httpheader: any;
   assetBaseUrl: string;
+  jsonBaseUrl: string;
+
   _glossary: GlossaryEntry[];
   _species: SpeciesProfile[];
   _remainingSpecies: SpeciesProfile[];
@@ -297,23 +300,23 @@ class DataServiceController {
     }
 
     let fileSystemBase = '';
-    /* TODO stencil
+    /* TODO stencil: app
     if (speciesGroup.useFileSystem) {
       this.assetBaseUrl = this.assetMger.getNormalizedBaseUrl();
       fileSystemBase = this.assetMger.getFilesystemBaseUrl();
     } else {
       this.assetBaseUrl = speciesGroup.baseUrl;
     }*/
-    this.assetBaseUrl = "./data/";
 
     this.preparingSpecies.next(true);
     let dbFileName = speciesGroup.info.dbUrl;
     console.log('### speciesGroup.id', speciesGroup.id);
     console.log('db file:', dbFileName);
+    console.log('jsonBaseUrl:', this.jsonBaseUrl);
     console.log('assetBaseUrl:', this.assetBaseUrl);
     // load database and settings
     try {
-      await DatabaseService.initialize(dbFileName, this.assetBaseUrl, fileSystemBase);
+      await DatabaseService.initialize(dbFileName, this.jsonBaseUrl, fileSystemBase, this.httpheader);
 
       // get syncronous data
       this._config = DatabaseService.getConfigurationData();

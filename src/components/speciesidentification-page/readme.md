@@ -7,9 +7,12 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type  | Default     |
-| -------- | --------- | ----------- | ----- | ----------- |
-| `json`   | `json`    |             | `any` | `undefined` |
+| Property     | Attribute    | Description | Type     | Default     |
+| ------------ | ------------ | ----------- | -------- | ----------- |
+| `asseturl`   | `asseturl`   |             | `string` | `''`        |
+| `dataurl`    | `dataurl`    |             | `string` | `'./data'`  |
+| `httpheader` | `httpheader` |             | `any`    | `{}`        |
+| `json`       | `json`       |             | `any`    | `undefined` |
 
 
 ## Dependencies

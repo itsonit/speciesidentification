@@ -38,6 +38,9 @@ export class SpeciesidentificationPage implements ComponentInterface {
    * - loading / looadingController: id-logics app
    */
   @Prop({ reflect: true }) json: any;
+  @Prop() httpheader: any = {};
+  @Prop() asseturl: string = '';
+  @Prop() dataurl: string = './data';
 
   @State() view: string = "";
   @State() fixedCategory: string = "";
@@ -76,13 +79,11 @@ export class SpeciesidentificationPage implements ComponentInterface {
 
   @Watch('json')
   watchHandler(newValue: any) {
+    DataService.httpheader  = this.httpheader;
+    DataService.assetBaseUrl = this.asseturl;
+    DataService.jsonBaseUrl = this.dataurl;
     DataService.setSpeciesGroup(newValue);
     this.setSpeciesGroup();
-  }
-
-  componentWillRender() {
-    console.log("willrender");
-    console.log("prop2", this.json);
   }
 
   setSpeciesGroup() {
