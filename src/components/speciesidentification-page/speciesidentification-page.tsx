@@ -39,8 +39,8 @@ export class SpeciesidentificationPage implements ComponentInterface {
    */
   @Prop({ reflect: true }) json: any;
   @Prop() httpheader: any = {};
-  @Prop() asseturl: string = '';
-  @Prop() dataurl: string = './data';
+  @Prop() asseturl: string = './data/';
+  @Prop() dataurl: string = './data/';
 
   @State() view: string = "";
   @State() fixedCategory: string = "";
@@ -255,6 +255,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
     }
     let alert = alertController.create({
       header: "Datum berücksichtigen?",
+      mode: 'ios',
       message: `Möchtest Du bei der Bestimmung die Jahreszeit berücksichtigen? Dadurch werden bei der Bestimmung nur Merkmale ausgewählt, die in der aktuellen Jahreszeit sichtbar sind.`,
       buttons: [
         {
@@ -521,8 +522,16 @@ export class SpeciesidentificationPage implements ComponentInterface {
                 mode="ios"
                 lines="none"
               >
+              <div class="item-inner">
                 <div class="input-wrapper">
-                  <ion-label mode="ios">{this.nextQuestion?.question}</ion-label>
+                  <ion-label mode="ios">Type: {this.nextQuestion?.typeId} {this.nextQuestion?.question}
+                  <img
+                  src={this.nextQuestion?.image}
+                  class={{
+                    nghide: !this.nextQuestion?.image,
+                    ngshow: !!this.nextQuestion?.image,
+                  }}
+                /></ion-label>
                 </div>
                 <button
                   ion-button
@@ -545,13 +554,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
                     <ion-icon name="idlogic-question-mark" class="ion-ios-idlogic-question-mark ion-ios-icon"></ion-icon>
                   </span>
                 </button>
-                <img
-                  src={this.nextQuestion?.image}
-                  class={{
-                    nghide: !this.nextQuestion?.image,
-                    ngshow: !!this.nextQuestion?.image,
-                  }}
-                />
+                </div>
               </ion-item>
               <ion-item-divider class="idl-answer-heading">
                 <ion-label>Antwort auswählen</ion-label>
@@ -594,7 +597,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
                 }}
               >
                 <ion-grid class="grid">
-                  <ion-row>
+                  <ion-row class="row">
                     {this.nextQuestion?.options.map((option) => (
                       <ion-col col-4>
                         <button
@@ -631,8 +634,8 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   ngshow: this.nextQuestion?.typeId === 2,
                 }}
               >
-                <ion-grid>
-                  <ion-row>
+                <ion-grid class="grid">
+                  <ion-row class="row">
                     {this.nextQuestion?.options.map((option) => (
                       <ion-col
                         class="idl-color-option-col"
@@ -660,8 +663,8 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   ngshow: this.nextQuestion?.typeId === 3,
                 }}
               >
-                <ion-grid>
-                  <ion-row>
+                <ion-grid class="grid">
+                  <ion-row class="row">
                     {this.nextQuestion?.options.map((option) => (
                       <ion-col
                         col-6
@@ -671,7 +674,11 @@ export class SpeciesidentificationPage implements ComponentInterface {
                         onClick={() => this.selectOption(option)}
                       >
                         <button
-                          class="idl-answer-button"
+                                          class={{
+                                            "button": true,
+                                            "button-ios": true,
+                                            "button-default": true,
+                                            "idl-answer-button": true}}
                           ion-button
                           onClick={() => this.selectOption(option)}
                         >
@@ -741,8 +748,8 @@ export class SpeciesidentificationPage implements ComponentInterface {
                   ngshow: this.nextQuestion?.typeId > 5,
                 }}
               >
-                <ion-grid>
-                  <ion-row>
+                <ion-grid class="grid">
+                  <ion-row class="row">
                     {this.nextQuestion?.options.map((option) => (
                       <ion-col col-4>
                         <button
