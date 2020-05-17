@@ -524,7 +524,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
               >
               <div class="item-inner">
                 <div class="input-wrapper">
-                  <ion-label mode="ios">Type: {this.nextQuestion?.typeId} {this.nextQuestion?.question}
+                  <ion-label mode="ios">{this.nextQuestion?.question}
                   <img
                   src={this.nextQuestion?.image}
                   class={{
