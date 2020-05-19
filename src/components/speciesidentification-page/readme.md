@@ -9,8 +9,8 @@
 
 | Property     | Attribute    | Description | Type     | Default     |
 | ------------ | ------------ | ----------- | -------- | ----------- |
-| `asseturl`   | `asseturl`   |             | `string` | `''`        |
-| `dataurl`    | `dataurl`    |             | `string` | `'./data'`  |
+| `asseturl`   | `asseturl`   |             | `string` | `'./data/'` |
+| `dataurl`    | `dataurl`    |             | `string` | `'./data/'` |
 | `httpheader` | `httpheader` |             | `any`    | `{}`        |
 | `json`       | `json`       |             | `any`    | `undefined` |
 
