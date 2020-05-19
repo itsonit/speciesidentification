@@ -17,6 +17,7 @@ export namespace Components {
         "dataurl": string;
         "httpheader": any;
         "json": any;
+        "new": () => Promise<void>;
     }
     interface SpeciesidentificationSegmentSwitch {
     }

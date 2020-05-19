@@ -15,6 +15,19 @@
 | `json`       | `json`       |             | `any`    | `undefined` |
 
 
+## Methods
+
+### `new() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Dependencies
 
 ### Depends on

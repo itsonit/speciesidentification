@@ -5,7 +5,8 @@ import {
   State,
   Element,
   Prop,
-  Watch
+  Watch,
+  Method
 } from "@stencil/core";
 import { alertController, loadingController } from "@ionic/core";
 
@@ -245,6 +246,7 @@ export class SpeciesidentificationPage implements ComponentInterface {
     this.loadingFlag = false;
   }
 
+  @Method()
   async new() {
     //TODO
     console.log("new");
