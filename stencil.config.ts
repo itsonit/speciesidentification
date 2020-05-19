@@ -2,6 +2,7 @@ import { Config } from '@stencil/core';
 
 export const config: Config = {
   namespace: 'speciesidentification',
+  //globalStyle: 'src/assets/global.css',
   taskQueue: 'async',
   outputTargets: [
     {
