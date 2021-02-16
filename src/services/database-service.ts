@@ -82,6 +82,7 @@ export type AnswerOption = {
   unit?: string;
   color?: string;
   rang?: number;
+  fromHereOnAllowedAttributes?: null | number[];
 };
 
 export type Question = {

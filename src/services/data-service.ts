@@ -45,6 +45,7 @@ export type QuestionHistoryEntry = {
   remainingSpeciesID: string[];
   index: number;
   skipped: boolean;
+  fromHereOnAllowedAttributesIds?: null | number[];
 };
 
 export type CustomQuestionInfo = {
@@ -95,6 +96,7 @@ class DataServiceController {
   _dependingAttributes = {};
   _similarities = {};
   _allAttributeIds = [];
+  _fromHereOnAllowedAttributesIds = [];
   _nextQuestions = [];
   _nextQuestionIndex: number = 0;
   _isFakeMode = false;
@@ -383,6 +385,7 @@ class DataServiceController {
     while (entry.question.id !== this._questionHistory.pop().question.id && this._questionHistory.length > 0) {}
     this.questionHistory.next(this._questionHistory);
 
+    this._fromHereOnAllowedAttributesIds = entry.fromHereOnAllowedAttributesIds;
     this._remainingSpeciesIds = entry.remainingSpeciesID;
     this._remainingSpecies = entry.remainingSpeciesID.map(id => this._species.find(species => species.id === id));
     this.remainingSpecies.next(this._remainingSpecies);
@@ -401,6 +404,10 @@ class DataServiceController {
     if (!answer) {
       return;
     }
+    if("fromHereOnAllowedAttributes" in answer && answer.fromHereOnAllowedAttributes !== null) {
+      this._fromHereOnAllowedAttributesIds = answer.fromHereOnAllowedAttributes;
+    }
+
     // this will pop species stack so the species list is shown TODO: renname subject
     this.newIdentification.next(true);
     this._questionHistory.push({
@@ -408,9 +415,12 @@ class DataServiceController {
       answer,
       remainingSpeciesID: this._remainingSpeciesIds, // status before question is answered!
       index: this._questionHistory.length + 1,
-      skipped: false
+      skipped: false,
+      fromHereOnAllowedAttributesIds: this._fromHereOnAllowedAttributesIds
     });
     this.questionHistory.next(this._questionHistory.sort((a, b) => (a.index > b.index ? 1 : -1)));
+
+
 
     // add speciesNotHandledByQuestion to selected specied
     let remainingSpecies = answer['remainingSpecies'].concat(this.currentQuestion['speciesNotHandledByQuestion']);
@@ -433,6 +443,7 @@ class DataServiceController {
     this._remainingSpeciesIds = this._remainingSpecies.map(aSpecies => aSpecies.id);
     this.remainingSpecies.next(this._remainingSpecies);
     this._questionHistory = [];
+    this._fromHereOnAllowedAttributesIds = [];
     this.questionHistory.next(this._questionHistory);
     this.customQuestionInfo.next({ status: CustomQuestionStatus.notStarted, missingAnswers: 0 });
     this.customQuestions.next(null);
@@ -448,6 +459,7 @@ class DataServiceController {
     this._remainingSpeciesIds = this._remainingSpecies.map(aSpecies => aSpecies.id);
     this.remainingSpecies.next(this._remainingSpecies);
     this._questionHistory = [];
+    this._fromHereOnAllowedAttributesIds = [];
     this.questionHistory.next(this._questionHistory);
     this.customQuestionInfo.next({ status: CustomQuestionStatus.notStarted, missingAnswers: 0 });
     this.customQuestions.next(null);
@@ -485,6 +497,7 @@ class DataServiceController {
       .map(historyEntry => historyEntry.question.id);
     knownQuestions.forEach(attributeId => remainingAttributes.delete(attributeId));
 
+
     /*
         // 2) remove questions already asked
         let remainingQuestions = new Set ( Object.keys ( this._questionsById ) );
@@ -518,6 +531,11 @@ class DataServiceController {
 
     // remainingAttributes does now contain the list of all questions (aka Attributes) still relevant
     let remainingAttributesIds = Array.from(remainingAttributes.values());
+
+    // new 02-2021: rm questions based on fromHereOnAllowedAttributes
+    if(this._fromHereOnAllowedAttributesIds.length > 0) {
+      remainingAttributesIds = remainingAttributesIds.filter(attributeID => this._fromHereOnAllowedAttributesIds.find(allowedID => allowedID + '' === attributeID + ''));
+    }
 
     // 4) calculate matchList -> attributes to characteristics to species; this includes reduction weights (taking similar into account)
     let matchList = DatabaseService.getMatchList(remainingSpeciesIds, remainingAttributesIds);
