@@ -534,6 +534,7 @@ class DataServiceController {
 
     // new 02-2021: rm questions based on fromHereOnAllowedAttributes
     if(this._fromHereOnAllowedAttributesIds.length > 0) {
+      console.log("filter _fromHereOnAllowedAttributesIds (question whitelist): ", this._fromHereOnAllowedAttributesIds);
       remainingAttributesIds = remainingAttributesIds.filter(attributeID => this._fromHereOnAllowedAttributesIds.find(allowedID => allowedID + '' === attributeID + ''));
     }
 
