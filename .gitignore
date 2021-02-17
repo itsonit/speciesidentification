@@ -26,4 +26,8 @@ UserInterfaceState.xcuserstate
 .env
 
 #own
-/src/data/
+# exclude everything
+/src/data/*
+
+# exception to the rule
+!/src/data/.gitkeep 
