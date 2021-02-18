@@ -1,3 +1,5 @@
+  # Development
+  
   $ npm start
     Starts the development server.
 
@@ -13,8 +15,10 @@
    $ cd speciesidentification
    $ npm start
 
-   
+# deploy all-incl
 
+  * build local: `$ npm run build``
+  * deploy vis (s)ftp
 
 
 
