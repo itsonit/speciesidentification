@@ -404,8 +404,14 @@ class DataServiceController {
     if (!answer) {
       return;
     }
+    
+    let remainingSpecies = answer['remainingSpecies'];
+
     if("fromHereOnAllowedAttributes" in answer && answer.fromHereOnAllowedAttributes !== null) {
       this._fromHereOnAllowedAttributesIds = answer.fromHereOnAllowedAttributes;
+    } else {
+      // add speciesNotHandledByQuestion to selected specied
+      remainingSpecies = remainingSpecies.concat(this.currentQuestion['speciesNotHandledByQuestion']);
     }
 
     // this will pop species stack so the species list is shown TODO: renname subject
@@ -422,11 +428,9 @@ class DataServiceController {
 
 
 
-    // add speciesNotHandledByQuestion to selected specied
-    let remainingSpecies = answer['remainingSpecies'].concat(this.currentQuestion['speciesNotHandledByQuestion']);
     let remainingSpeciesUnique = Array.from(new Set(remainingSpecies));
-
     this._remainingSpecies = remainingSpeciesUnique.map(id => this._species.find(species => species.id === id));
+    console.log("this._remainingSpecies: ", this._remainingSpecies);
     this._remainingSpeciesIds = this._remainingSpecies.map(aSpecies => aSpecies.id);
     this.remainingSpecies.next(this._remainingSpecies);
     if (this._config && this._remainingSpecies.length <= this._config.manualSelectionFrom) {
@@ -456,6 +460,11 @@ class DataServiceController {
   startNewIdentification(useDate: boolean): Promise<void> {
     // TODO: integrate with resetAllIdentificationSettings
     this._remainingSpecies = this._species;
+
+    if(this._remainingSpecies === undefined) {
+      return;
+    }
+
     this._remainingSpeciesIds = this._remainingSpecies.map(aSpecies => aSpecies.id);
     this.remainingSpecies.next(this._remainingSpecies);
     this._questionHistory = [];
@@ -536,6 +545,8 @@ class DataServiceController {
     if(this._fromHereOnAllowedAttributesIds.length > 0) {
       console.log("filter _fromHereOnAllowedAttributesIds (question whitelist): ", this._fromHereOnAllowedAttributesIds);
       remainingAttributesIds = remainingAttributesIds.filter(attributeID => this._fromHereOnAllowedAttributesIds.find(allowedID => allowedID + '' === attributeID + ''));
+    } else {
+      console.log("no filter _fromHereOnAllowedAttributesIds");
     }
 
     // 4) calculate matchList -> attributes to characteristics to species; this includes reduction weights (taking similar into account)
