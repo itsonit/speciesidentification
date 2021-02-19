@@ -406,12 +406,16 @@ class DataServiceController {
     }
     
     let remainingSpecies = answer['remainingSpecies'];
-
+    // add speciesNotHandledByQuestion to selected specied
+    remainingSpecies = remainingSpecies.concat(this.currentQuestion['speciesNotHandledByQuestion']);
+    
     if("fromHereOnAllowedAttributes" in answer && answer.fromHereOnAllowedAttributes !== null) {
-      this._fromHereOnAllowedAttributesIds = answer.fromHereOnAllowedAttributes;
-    } else {
-      // add speciesNotHandledByQuestion to selected specied
-      remainingSpecies = remainingSpecies.concat(this.currentQuestion['speciesNotHandledByQuestion']);
+      if(this._fromHereOnAllowedAttributesIds === null || this._fromHereOnAllowedAttributesIds.length === 0) {
+        this._fromHereOnAllowedAttributesIds = answer.fromHereOnAllowedAttributes;
+      } else {
+        //intersection
+        this._fromHereOnAllowedAttributesIds = this._fromHereOnAllowedAttributesIds.filter(attributeID => answer.fromHereOnAllowedAttributes.find(allowedID => allowedID + '' === attributeID + ''));
+      }
     }
 
     // this will pop species stack so the species list is shown TODO: renname subject
